@@ -54,10 +54,14 @@ Output:
 +----------+
 Explanation: Joe is the only employee who earns more than his manager.
 
-ANSWER:
+ANSWER (correct answer below, row 59 and 61):
 
 select Employee.name as Employee from Employee join Employee as managerTable on Employee.managerId = managerTable.id where Employee.salary > managerTable.salary;
 
 select Employee.name as Employee from Employee inner join Employee as managerTable on Employee.managerId = managerTable.id where Employee.salary > managerTable.salary;
+
+Somewhat correct answer but actually wrong:
+
+select name as Employee from Employee where ((select salary from Employee where managerId is not null limit 1)>(select salary from Employee where managerId is null limit 1)) limit 1;
 
 Hint: This is basically inner join (default join) on replica of the given table with a comparison operator.
