@@ -70,6 +70,8 @@ Hint: This is basically inner join (default join) on replica of the given table 
 
 #3
 
+# Customers Who Never Order
+
 Input: 
 Customers table:
 +----+-------+
