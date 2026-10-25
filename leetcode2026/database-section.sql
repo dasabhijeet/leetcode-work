@@ -65,3 +65,43 @@ Somewhat correct answer but actually wrong:
 select name as Employee from Employee where ((select salary from Employee where managerId is not null limit 1)>(select salary from Employee where managerId is null limit 1)) limit 1;
 
 Hint: This is basically inner join (default join) on replica of the given table with a comparison operator.
+
+
+
+#3
+
+Input: 
+Customers table:
++----+-------+
+| id | name  |
++----+-------+
+| 1  | Joe   |
+| 2  | Henry |
+| 3  | Sam   |
+| 4  | Max   |
++----+-------+
+Orders table:
++----+------------+
+| id | customerId |
++----+------------+
+| 1  | 3          |
+| 2  | 1          |
++----+------------+
+Output: 
++-----------+
+| Customers |
++-----------+
+| Henry     |
+| Max       |
++-----------+
+
+
+CORRECT ANSWER:
+
+SELECT Customers.name AS Customers FROM Customers LEFT JOIN Orders ON Customers.id = Orders.id WHERE Customers.id NOT IN (SELECT Orders.customerId FROM Orders);
+  
+WRONG ANSWER, BUT NEARLY CORRECT:
+
+SELECT Customers.name AS Customers FROM Customers INNER JOIN Orders ON Customers.id = Orders.id WHERE Customers.id NOT IN (SELECT Orders.customerId FROM Orders);
+
+Lesson: Use venn diagram to visualize the join statements.
