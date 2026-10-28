@@ -162,4 +162,14 @@ ANSWER:
 
 DELETE DuplicateRecord FROM Person AS DuplicateRecord INNER JOIN Person AS KeepRecord ON DuplicateRecord.email = KeepRecord.email AND DuplicateRecord.id > KeepRecord.id;
 
--- Hint: Inner join same table, then compare the id and only delete those having higher id value.
+-- Hint/working logic: Inner join same table alias, then compare the id and only delete those having higher id value.
+
+# Much more efficient and logical: Solution 2:
+
+DELETE FROM Person WHERE id NOT IN (SELECT id FROM (SELECT MIN(id) AS id FROM Person GROUP BY email) AS BackupTable);
+
+Working logic: Inner most subquery 'GROUP BY' groups all identical rows and also 'MIN' function returns smallest value, i.e. first occurence. At the same time, it creates
+a new id column alias using 'AS'. Then it also creates a new temporary table alias using 'AS'. Only then 'SELECT id FROM' subquery starts working. Because this entire subquery 
+section only sorts the first occurence and produces them properly via aliases, the DELETE query can simply delete all occurences except first occurence. Hence it works.
+
+-- Q4 is fairly tricky yet presented as if its simple.
