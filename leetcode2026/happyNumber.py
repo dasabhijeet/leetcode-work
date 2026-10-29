@@ -70,6 +70,9 @@ print(sol.isHappy(inp))
 class Solution:
     def isHappy(self, n: int) -> bool:
 
+        if n < 1 or n > 2**31 - 1:
+            return False
+
         counter = 0
 
         while counter < 100:
@@ -106,6 +109,9 @@ print(sol.isHappy(inp))
 
 class Solution:
     def isHappy(self, n: int) -> bool:
+
+        if n < 1 or n > 2**31 - 1:
+            return False
 
         counter = 0
 
