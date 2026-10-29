@@ -145,4 +145,14 @@ inp = int(input("Enter an integer: "))
 sol = Solution()
 print(sol.isHappy(inp))
 
+
+# SOLUTION 1 Logic of set()
+
+'''
+>>> set(['0', '2', '5', '2', '6', '3', '5', '5', '1', '0'])
+{'1', '2', '5', '3', '0', '6'}
+
+set() doesn't allow duplicates, hence stores unique. By using that, we can check if-else, if satisfies, returns False.
+'''
+
 #repo: https://github.com/dasabhijeet/leetcode-work
