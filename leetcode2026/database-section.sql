@@ -173,3 +173,62 @@ a new id column alias using 'AS'. Then it also creates a new temporary table ali
 section only sorts the first occurence and produces them properly via aliases, the DELETE query can simply delete all occurences except first occurence. Hence it works.
 
 -- Q4 is fairly tricky yet presented as if its simple.
+
+
+-- QUESTION 5 (Fairly Tricky and NOT EASY, unlike written in Leetcode!):
+
+Table: Weather
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| recordDate    | date    |
+| temperature   | int     |
++---------------+---------+
+id is the column with unique values for this table.
+There are no different rows with the same recordDate.
+This table contains information about the temperature on a certain day.
+ 
+
+Write a solution to find all dates id with higher temperatures compared to its previous calendar dates (yesterday).
+
+Return the result table in any order.
+
+The result format is in the following example.
+
+ 
+
+Example 1:
+
+Input: 
+Weather table:
++----+------------+-------------+
+| id | recordDate | temperature |
++----+------------+-------------+
+| 1  | 2015-01-01 | 10          |
+| 2  | 2015-01-02 | 25          |
+| 3  | 2015-01-03 | 20          |
+| 4  | 2015-01-04 | 30          |
++----+------------+-------------+
+Output: 
++----+
+| id |
++----+
+| 2  |
+| 4  |
++----+
+Explanation: 
+In 2015-01-02, the temperature was higher than the previous day (10 -> 25).
+In 2015-01-04, the temperature was higher than the previous day (20 -> 30).
+
+
+ANSWER:
+
+# Write your MySQL query statement below
+
+SELECT TodayTableAlias.id AS id FROM Weather AS TodayTableAlias JOIN Weather AS YesterdayTableAlias ON DATEDIFF(TodayTableAlias.recordDate, YesterdayTableAlias.recordDate) = 1 WHERE TodayTableAlias.temperature > YesterdayTableAlias.temperature;
+
+SELECT TodayTableAlias.id AS id FROM Weather AS TodayTableAlias INNER JOIN Weather AS YesterdayTableAlias ON DATEDIFF(TodayTableAlias.recordDate, YesterdayTableAlias.recordDate) = 1 WHERE TodayTableAlias.temperature > YesterdayTableAlias.temperature;
+
+-- This question is fairly tricky. Learn DATEDIFF and SELFJOIN deeply. Some memorization may be needed if logic is not working for the moment. Also teaches that INNER JOIN = JOIN. Same thing.
