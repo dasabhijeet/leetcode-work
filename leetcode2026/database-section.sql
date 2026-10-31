@@ -412,4 +412,3 @@ Solution 2:
 SELECT NAME, BALANCE FROM (SELECT Users.name AS NAME, SUM(Transactions.amount) AS BALANCE FROM Users 
 JOIN Transactions ON Users.account = Transactions.account
 GROUP BY Transactions.account) AS ResultTableAlias WHERE BALANCE > 10000;
-
